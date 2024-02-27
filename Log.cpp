@@ -1,39 +1,39 @@
 #include "Log.h"
 #include <cmath>
 
-void Log::add_item(int id, string type, double price)
-{
+void Log::add_item(
+    const string& cardNumber, 
+	const string& currency, 
+	const int& amountCents, 
+	const Payment::date_time& dateTime
+) {
     if (_count < Log::MAX_SIZE)
     {
-        Bicycle new_item;
-        new_item.init(id, type, price);
+        Payment new_item(cardNumber, currency, amountCents, dateTime);
         _items[_count] = new_item;
         _count++;
     }
 }
 
-Bicycle Log::find_item(Bicycle query)
+Payment Log::find_item(const Payment& query)
 {
     for (size_t i = 0; i < _count; i++)
     {
-        // for integer or boolean type property
-        if (query.get_id() != 0
-            && query.get_id() != _items[i].get_id())
+        if (query.get_cardNumber() != ""
+            && query.get_cardNumber() != _items[i].get_cardNumber())
             continue;
-
-        // for string type property
-        if (query.get_type() != ""
-            && query.get_type() != _items[i].get_type())
+        if (query.get_currency() != ""
+            && query.get_currency() != _items[i].get_currency())
             continue;
-
-        // for double type
-        constexpr double epsil{ 0.005 };
-        if (query.get_price() != 0.0
-            && epsil < std::abs(query.get_price() - _items[i].get_price()))
+        if (query.get_amountCents() != 0
+            && query.get_amountCents() != _items[i].get_amountCents())
+            continue;
+        if (query.get_dateTime() != Payment::date_time{}
+            && query.get_dateTime() != _items[i].get_dateTime())
             continue;
 
         return _items[i];
     }
 
-    return Bicycle{}; // returns the 'default' object value
+    return Payment{}; // returns the 'default' object value
 }

@@ -1,15 +1,16 @@
 #include <iostream>
-#include "Bicycle.h"
+#include <cassert>
+#include "Payment.h"
 #include "Log.h"
 
 using namespace std;
 
 // outputs abstraction object properties to the console window
-void show(Bicycle item)
+void show(Payment item)
 {
-    cout << item.get_id() << " "
-        << "'" << item.get_type() << "' "
-        << item.get_price() << " "
+    cout << item.get_cardNumber() << " "
+        << "'" << item.get_currency() << "' "
+        << item.get_amountCents() << " "
         << endl;
 }
 
@@ -17,25 +18,37 @@ void show(Bicycle item)
 int main()
 {
     Log log;
-
-    log.init();
+    auto test_time{ std::chrono::system_clock::now() };
 
     // adds several different abstraction objects to the log
-    log.add_item(1, "BMX", 499.99);
-    log.add_item(2, "MTB", 549.99);
+    log.add_item("1234567890123456", "USD", 1520, test_time - std::chrono::hours(100));
+    log.add_item("1034277890123456", "EUR", 1000, test_time - std::chrono::hours(60));
+    log.add_item("1034277890123456", "EUR", 2434, test_time - std::chrono::hours(80));
 
-    Bicycle qry;
     // provides querying values (some can be default (e.g., "", 0) to denote unset criteria)
-    qry.init(2, "", 0.0);
-    show(log.find_item(qry));
 
-    // tests with different query values
-    qry.init(0, "BMX", 0.0);
-    show(log.find_item(qry));
+    auto qry = Payment{"1234567890123456", "", 0, {}};
+    auto result = log.find_item(qry);
+    show(result);
+    assert(result.get_amountCents() == 1520);
+    assert(result.get_dateTime() == test_time - std::chrono::hours(100));
+
+    qry = Payment{"", "EUR", 0, {}};
+    result = log.find_item(qry);
+    show(result);
+    assert(result.get_cardNumber() == "1034277890123456");
+
+    qry = Payment{"", "EUR", 2434, {}};
+    result = log.find_item(qry);
+    show(result);
+    assert(result.get_dateTime() == test_time - std::chrono::hours(80));
 
     // tests for nonmatching object
-    qry.init(0, "Beach", 0.0);
-    show(log.find_item(qry));
+
+    qry = Payment{"", "", 1111, {}};
+    result = log.find_item(qry);
+    show(result);
+    assert(result.get_amountCents() == 0);
 
     return 0;
 }
