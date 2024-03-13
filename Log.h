@@ -28,6 +28,8 @@ public:
     Payment find_item(const Payment& query) const;
 
     Payment find_largest_payment() const;
+
+    double find_average_amount() const;
 private:
     // The maximum number of abstraction objects that can be stored
     static const size_t MAX_SIZE{ 10 };
@@ -38,4 +40,3 @@ private:
     // The number of currently stored abstraction objects in the array _items
     size_t _count;
 };
-

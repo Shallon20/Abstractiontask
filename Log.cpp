@@ -51,3 +51,14 @@ Payment Log::find_item(const Payment& query) const
     std::sort(payments.begin(), payments.end());
     return payments.back();
  }
+
+ double Log::find_average_amount() const
+ {
+    double sum = 0;
+    for (size_t i = 0 ; i < _count ; i++){
+        sum += _items[i].get_amountCents();
+    }
+    return sum/(double)_count/100;
+ }
+
+ 

@@ -64,6 +64,8 @@ int main()
     std::cout << "The largest payment:\n";
     show(log.find_largest_payment());
 
+    std::cout << "Payment average: " << log.find_average_amount() << "\n";
+
     return 0;
 
 }
