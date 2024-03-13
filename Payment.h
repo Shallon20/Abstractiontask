@@ -24,6 +24,11 @@ public:
 	std::string_view get_cardType_str() { return CardType_str[(std::size_t)_cardType]; }
 	date_time get_dateTime() const { return _dateTime; }
 
+	inline bool operator <(const Payment& other)
+	{
+		return _amountCents < other._amountCents;
+	}
+
 private:
 	std::string _cardNumber;
 	std::string _currency;

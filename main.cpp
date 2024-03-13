@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <algorithm>
 #include "Payment.h"
 #include "Log.h"
 
@@ -25,7 +26,6 @@ int main()
     log.add_item("1234567890123456", "USD", 1520, Payment::CardType::CREDIT, test_time - std::chrono::hours(100));
     log.add_item("1034277890123456", "EUR", 1000, Payment::CardType::DEBIT, test_time - std::chrono::hours(60));
     log.add_item("1034277890123456", "EUR", 2434, Payment::CardType::GIFT, test_time - std::chrono::hours(80));
-
 
     // provides querying values (some can be default (e.g., "", 0) to denote unset criteria)
 
@@ -61,5 +61,9 @@ int main()
     show(result);
     assert(result.get_amountCents() == 0);
 
+    std::cout << "The largest payment:\n";
+    show(log.find_largest_payment());
+
     return 0;
+
 }

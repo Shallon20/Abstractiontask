@@ -1,5 +1,7 @@
 #include "Log.h"
 #include <cmath>
+#include <vector>
+#include <algorithm>
 
 void Log::add_item(
     const std::string& cardNumber, 
@@ -16,7 +18,7 @@ void Log::add_item(
     }
 }
 
-Payment Log::find_item(const Payment& query)
+Payment Log::find_item(const Payment& query) const
 {
     for (size_t i = 0; i < _count; i++)
     {
@@ -40,4 +42,12 @@ Payment Log::find_item(const Payment& query)
     }
 
     return Payment{}; // returns the 'default' object value
+
 }
+
+ Payment Log::find_largest_payment() const
+ {
+    std::vector<Payment> payments(std::begin(_items), std::begin(_items)+_count);
+    std::sort(payments.begin(), payments.end());
+    return payments.back();
+ }
