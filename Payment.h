@@ -3,29 +3,32 @@
 #include <string>
 #include <chrono>
 
-using namespace std;
-
 class Payment
 {
 public:
-	typedef chrono::system_clock::time_point date_time;
-
+	typedef std::chrono::system_clock::time_point date_time;
+	enum class CardType {ANY, CREDIT, DEBIT, GIFT, EBT};
+	static constexpr std::string_view CardType_str[] { "Any", "Credit", "Debit", "Gift", "EBT" };
 	Payment(
-		const string& cardNumber = "",
-		const string& currency = "", 
+		const std::string& cardNumber = "",
+		const std::string& currency = "", 
 		const int& amountCents = 0,
+		const CardType cardType = CardType::ANY,
 		const date_time& dateTime = {}
 	);
 	
-	string get_cardNumber() const { return _cardNumber; }
-	string get_currency() const { return _currency; }
+	std::string get_cardNumber() const { return _cardNumber; }
+	std::string get_currency() const { return _currency; }
 	int get_amountCents() const { return _amountCents; }
+	CardType get_cardType() const { return _cardType; }
+	std::string_view get_cardType_str() { return CardType_str[(std::size_t)_cardType]; }
 	date_time get_dateTime() const { return _dateTime; }
 
 private:
-	string _cardNumber;
-	string _currency;
+	std::string _cardNumber;
+	std::string _currency;
 	int _amountCents;
+	CardType _cardType;
 	date_time _dateTime;
 
 };

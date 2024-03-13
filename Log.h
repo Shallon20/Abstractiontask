@@ -17,9 +17,10 @@ public:
     // From passed property values, creates and adds new abstraction object in an array _items
     // (replace parameters to match your property types and identifiers)
     void add_item(
-        const string& cardNumber, 
-        const string& currency, 
+        const std::string& cardNumber, 
+        const std::string& currency, 
         const int& amountCents, 
+        const Payment::CardType cardType,
         const Payment::date_time& dateTime
     );
 
