@@ -6,7 +6,7 @@ class Log
 {
 public:
     // Initializes the log
-    Log() { _count = 0; }
+    Log() :_count{ 0U } { }
 
     // Returns the current number of abstraction objects
     size_t get_count() const { return _count; }
@@ -20,12 +20,13 @@ public:
         const std::string& cardNumber, 
         const std::string& currency, 
         const int& amountCents, 
-        const Payment::CardType cardType,
-        const Payment::date_time& dateTime
+        const Payment::date_time& dateTime,
+        const PaymentSpec& spec
     );
 
     // Looks for a matching abstraction object and returns the first found or default object
     Payment find_item(const Payment& query) const;
+    Payment find_item(const PaymentSpec& query) const;
 
     Payment find_largest_payment() const;
 
