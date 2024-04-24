@@ -5,7 +5,7 @@ Payment::Payment(
 	const std::string& currency, 
 	const int& amountCents, 
 	const date_time& dateTime,
-	const PaymentSpec& spec
+	const std::shared_ptr<const PaymentSpec>& spec
 ) 
 	: _cardNumber{ cardNumber }
 		, _currency{ currency }

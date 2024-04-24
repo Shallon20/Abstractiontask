@@ -2,6 +2,7 @@
 
 #include <string>
 #include <chrono>
+#include <memory>
 
 class PaymentSpec
 {
@@ -13,6 +14,7 @@ public:
 	static constexpr std::string_view CardType_str[] { "Any", "Credit", "Debit", "Gift", "EBT" };
     static constexpr std::string_view CardScheme_str[] { "Any", "Visa", "Mastercard", "AmEx", "Discover" };
     static constexpr std::string_view PaymentType_str[] { "Any", "Auth", "Chargeback" };
+    bool matches(const PaymentSpec & otherSpec) const;
     PaymentSpec()
         : _cardType{ CardType::ANY }, _cardScheme{ CardScheme::ANY }, _paymentType{ 0U }
         { }
@@ -33,3 +35,4 @@ private:
     CardScheme _cardScheme;
     PaymentType _paymentType;
 };
+typedef std::shared_ptr<const PaymentSpec>spcPaymentSpec;

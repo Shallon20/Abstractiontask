@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+#include <optional>
 #include "Payment.h"
 
 class Log
@@ -21,7 +23,7 @@ public:
         const std::string& currency, 
         const int& amountCents, 
         const Payment::date_time& dateTime,
-        const PaymentSpec& spec
+        const std::shared_ptr<const PaymentSpec>& spec
     );
 
     // Looks for a matching abstraction object and returns the first found or default object
