@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <chrono>
+#include <iostream>
 #include "PaymentSpec.h"
 
 class Payment
@@ -28,6 +29,10 @@ public:
 	date_time get_dateTime() const { return _dateTime; }
 	const spcPaymentSpec & get_spec() const { return _spec; }
 	
+	void send_to(std::ostream & os) const;
+	void recv_from(std::istream & is);
+	friend std::istream & operator>>(std::istream &is,
+	Payment & item);
 
 	inline bool operator <(const Payment& other) const
 	{
@@ -42,3 +47,6 @@ private:
 	std::shared_ptr<const PaymentSpec> _spec;
 
 };
+
+std::ostream & operator<<(std::ostream & os, const
+Payment & item);

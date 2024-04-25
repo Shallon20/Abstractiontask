@@ -3,6 +3,7 @@
 #include <string>
 #include <chrono>
 #include <memory>
+#include <iostream>
 
 class PaymentSpec
 {
@@ -11,9 +12,16 @@ public:
 	enum class CardType {ANY, CREDIT, DEBIT, GIFT, EBT};
     enum class CardScheme {ANY, VISA, MASTERCARD, AMEX, DISCOVER};
     enum class PaymentType {ANY, AUTH, CHARGEBACK};
-	static constexpr std::string_view CardType_str[] { "Any", "Credit", "Debit", "Gift", "EBT" };
+	
+    static constexpr std::string_view CardType_str[] { "Any", "Credit", "Debit", "Gift", "EBT" };
     static constexpr std::string_view CardScheme_str[] { "Any", "Visa", "Mastercard", "AmEx", "Discover" };
     static constexpr std::string_view PaymentType_str[] { "Any", "Auth", "Chargeback" };
+    
+    void send_to(std::ostream & os) const;
+    void recv_from(std::istream & is);
+    friend std::istream & operator>>(std::istream & is,
+    PaymentSpec & spec);
+
     bool matches(const PaymentSpec & otherSpec) const;
     PaymentSpec()
         : _cardType{ CardType::ANY }, _cardScheme{ CardScheme::ANY }, _paymentType{ 0U }
@@ -36,3 +44,17 @@ private:
     PaymentType _paymentType;
 };
 typedef std::shared_ptr<const PaymentSpec>spcPaymentSpec;
+
+std::ostream & operator<<(std::ostream & os, PaymentSpec::CardType CardType);
+std::istream & operator<<(std::istream & is, PaymentSpec::CardType CardType);
+
+std::ostream & operator<<(std::ostream & os, PaymentSpec::CardScheme CardScheme);
+std::istream & operator<<(std::istream & is, PaymentSpec::CardScheme CardScheme);
+
+std::ostream & operator<<(std::ostream & os, PaymentSpec::PaymentType PaymentType);
+std::istream & operator<<(std::istream & is, PaymentSpec::PaymentType PaymentType);
+
+std::ostream & operator<<(std::ostream & os, const
+PaymentSpec & spec);
+
+constexpr auto csv_delimiter { ';'};

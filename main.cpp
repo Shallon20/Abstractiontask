@@ -10,18 +10,7 @@ using namespace std;
 // outputs abstraction object properties to the console window
 void show(const Payment& item)
 {
-    auto is_p{ item.get_spec() }; // returns smart pointer
-
-    if (!is_p) // if there is no specification object
-        is_p.reset(new PaymentSpec()); // construct the default
-    
-    cerr << item.get_cardNumber() << " "
-        << "'" << item.get_currency() << "' "
-        << item.get_amountCents() << " "
-        << is_p->get_cardType_str() << " "
-        << is_p->get_cardScheme_str() << " "
-        << is_p->get_paymentType_str() << " "
-        << endl;
+    cout << item << "\n";
 }
 
 const Payment get_largest_payment(const Log& log) {

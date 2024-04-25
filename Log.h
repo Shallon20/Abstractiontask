@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <optional>
+#include <stdexcept>
 #include "Payment.h"
 
 class Log
@@ -9,12 +10,16 @@ class Log
 public:
     // Initializes the log
     Log() :_count{ 0U } { }
+    const Payment & operator[](size_t i) const {return
+    this->get_item(i); }
 
+    const Payment & get_item(size_t i) const
+    {
+        if (i < _count) return _items[i];
+        throw std::out_of_range("Invalid index value");
+    }
     // Returns the current number of abstraction objects
     size_t get_count() const { return _count; }
-
-    // Returns stored abstraction object by its index or default object if index is invalid
-    Payment get_item(size_t i) const { return (i < _count) ? _items[i] : Payment{}; }
 
     // From passed property values, creates and adds new abstraction object in an array _items
     // (replace parameters to match your property types and identifiers)
