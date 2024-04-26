@@ -1,4 +1,5 @@
 #include "Payment.h"
+#include <string.h>
 
 Payment::Payment(
 	const std::string& cardNumber, 
@@ -13,13 +14,6 @@ Payment::Payment(
 		, _dateTime{ dateTime } 
 		, _spec{ spec } { };
 
-Payment::Payment()
-	: _cardNumber{ "" }
-	, _currency{ "" }
-	, _amountCents{ 0 }
-	, _dateTime{ {} } 
-	, _spec{ } { };
-	
 std::ostream & operator<<(std::ostream & os, const
 Payment & item)
 {
@@ -37,7 +31,7 @@ void Payment::send_to(std::ostream &os) const
 {
 	os << _cardNumber << csv_delimiter
 	   << _currency << csv_delimiter
-	   << _amountCents << csv_delimiter;
+	   << _amountCents;
 	if (_spec)
 	{
 		os << csv_delimiter;
@@ -51,7 +45,7 @@ void Payment::recv_from(std::istream & is)
         (is >> _cardNumber).ignore(); // calling ignore() to skip csv_delimiter
 
     if (is)
-       (is >> _currency).ignore();
+       std::getline(is >>std::ws, _currency, csv_delimiter);
 
     if (is)
        (is >> _amountCents).ignore();

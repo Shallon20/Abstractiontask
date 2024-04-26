@@ -34,12 +34,12 @@ bool PaymentSpec::matches(const PaymentSpec & otherSpec)const {
 return result;
 }
 std::ostream & operator<<(std::ostream & os, 
-PaymentSpec::CardType CardType){
+PaymentSpec::CardType cardType){
     return os<< 
-    PaymentSpec::CardType_str[static_cast<size_t>(CardType)];
+    PaymentSpec::CardType_str[static_cast<size_t>(cardType)];
 }
 std::istream & operator>>(std::istream & is, 
-PaymentSpec::CardType CardType){
+PaymentSpec::CardType &cardType){
     if (is)
     {
         std::string tmp;
@@ -53,14 +53,14 @@ PaymentSpec::CardType CardType){
                 if (tmp.length() == PaymentSpec::CardType_str[i].length()
 					&& 0 == strcasecmp(tmp.c_str(), std::string(PaymentSpec::CardType_str[i]).c_str())) // case insensitive comparison
                 {
-                    CardType = static_cast<PaymentSpec::CardType>(i);
+                    cardType = static_cast<PaymentSpec::CardType>(i);
                     found = true;
                     break;
                 }
             }
 
             if (!found)
-                CardType = PaymentSpec::CardType::ANY;
+                cardType = PaymentSpec::CardType::ANY;
         }
     }
 
@@ -68,12 +68,12 @@ PaymentSpec::CardType CardType){
 }
 
 std::ostream & operator<<(std::ostream & os, 
-PaymentSpec::CardScheme Cardscheme){
+PaymentSpec::CardScheme cardScheme){
     return os<< 
-    PaymentSpec::CardScheme_str[static_cast<size_t>(Cardscheme)];
+    PaymentSpec::CardScheme_str[static_cast<size_t>(cardScheme)];
 }
 std::istream & operator>>(std::istream & is, 
-PaymentSpec::CardScheme Cardscheme){
+PaymentSpec::CardScheme cardScheme){
     if (is)
     {
         std::string tmp;
@@ -87,14 +87,14 @@ PaymentSpec::CardScheme Cardscheme){
                 if (tmp.length() == PaymentSpec::CardScheme_str[i].length()
 					&& 0 == strcasecmp(tmp.c_str(), std::string(PaymentSpec::CardScheme_str[i]).c_str())) // case insensitive comparison
                 {
-                    Cardscheme = static_cast<PaymentSpec::CardScheme>(i);
+                    cardScheme = static_cast<PaymentSpec::CardScheme>(i);
                     found = true;
                     break;
                 }
             }
 
             if (!found)
-                Cardscheme = PaymentSpec::CardScheme::ANY;
+                cardScheme = PaymentSpec::CardScheme::ANY;
         }
     }
 
@@ -102,12 +102,12 @@ PaymentSpec::CardScheme Cardscheme){
 }
 
 std::ostream & operator<<(std::ostream & os, 
-PaymentSpec::PaymentType PaymentType){
+PaymentSpec::PaymentType paymentType){
     return os<< 
-    PaymentSpec::CardType_str[static_cast<size_t>(PaymentType)];
+    PaymentSpec::CardType_str[static_cast<size_t>(paymentType)];
 }
 std::istream & operator>>(std::istream & is, 
-PaymentSpec::PaymentType PaymentType){
+PaymentSpec::PaymentType & paymentType){
     if (is)
     {
         std::string tmp;
@@ -121,14 +121,14 @@ PaymentSpec::PaymentType PaymentType){
                 if (tmp.length() == PaymentSpec::PaymentType_str[i].length()
 					&& 0 == strcasecmp(tmp.c_str(), std::string(PaymentSpec::PaymentType_str[i]).c_str())) // case insensitive comparison
                 {
-                    PaymentType = static_cast<PaymentSpec::PaymentType>(i);
+                    paymentType = static_cast<PaymentSpec::PaymentType>(i);
                     found = true;
                     break;
                 }
             }
 
             if (!found)
-                PaymentType = PaymentSpec::PaymentType::ANY;
+                paymentType = PaymentSpec::PaymentType::ANY;
         }
     }
 
@@ -151,9 +151,9 @@ std::istream & operator>>(std::istream & is, PaymentSpec
 
 void PaymentSpec::send_to(std::ostream & os) const
 {
-    os << PaymentSpec::CardType::CREDIT << csv_delimiter
-       << PaymentSpec::CardScheme::VISA << csv_delimiter
-       << PaymentSpec::PaymentType::AUTH << csv_delimiter;
+    os << _cardType<< csv_delimiter
+       << _cardScheme<< csv_delimiter
+       << _paymentType;
 }
 
 void PaymentSpec::recv_from(std::istream & is)

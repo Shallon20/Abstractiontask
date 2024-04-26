@@ -22,7 +22,7 @@ void Log::add_item(
 
 Payment Log::find_item(const Payment& query) const
 { 
-    auto query_spec_p = query.get_spec();
+    auto query_spec_p{ query.get_spec()};
 
     for (size_t i = 0; i < _count; i++)
     {
@@ -42,7 +42,7 @@ Payment Log::find_item(const PaymentSpec& query_spec) const
 {
      for (size_t i = 0; i < _count; i++)
     {
-        auto item_spec_p = _items[i].get_spec();
+        auto item_spec_p{_items[i].get_spec() };
 
         if (item_spec_p && item_spec_p->matches(query_spec))
         {
@@ -72,30 +72,15 @@ Payment Log::find_item(const PaymentSpec& query_spec) const
 
  void Log::save(const std::string & csv_file_name) const
 {
-    std::ofstream outfile(csv_file_name);
-    if (!outfile.is_open()) {
-        throw std::runtime_error("Failed to open file for writing.");
-    }
+     std::ofstream os{ csv_file_name};
 
-    for (size_t i = 0; i < _count; i++) {
-        outfile << _items[i].get_cardNumber() << ";"
-                << _items[i].get_currency() << ";"
-                << _items[i].get_amountCents() << ";"
-                << _items[i].get_dateTime().time_since_epoch().count() << ";";
-
-        if (_items[i].get_spec()) {
-            outfile << *_items[i].get_spec();
-        }
-
-        outfile << std::endl;
-    }
-
-    outfile.close();
+    for (size_t i{ 0U }; os.good() && i < this->_count; i++)
+        os << this->_items[i] << "\n"; // or: { this->_items[i].send_to(os); os << "\n"; 
 }
 
 void Log::load(const std::string & csv_file_name)
 {
-   std::ifstream is{ "payments.csv" };
+   std::ifstream is{ csv_file_name };
 
     this->_count = 0;
 

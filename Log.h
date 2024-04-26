@@ -7,18 +7,19 @@
 #include <stdexcept>
 #include <exception>
 #include "Payment.h"
+#include "PaymentSpec.h"
 
 class Log
 {
 public:
     // Initializes the log
-    Log() :_count{ 0U } { }
+    Log() :_count{ 0 } { }
     const Payment & operator[](size_t i) const {return
     this->get_item(i); }
 
     const Payment & get_item(size_t i) const
     {
-        if (i < _count) return _items[i];
+        if (i < this->_count) return this->_items[i];
         throw std::out_of_range("Invalid index value");
     }
 

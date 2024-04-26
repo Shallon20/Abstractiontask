@@ -91,18 +91,11 @@ int main()
     cout << "Read...\n"
          << p2 << "\n----\n";
 
-    try {
-        log.load("payments.csv");
-        std::cout << "Loaded " << log.get_count() << " payments." << std::endl;
-        std::cout << "Average payment amount: $" << log.find_average_amount() << std::endl;
-        Payment largest = log.find_largest_payment();
-        std::cout << "Largest payment: " << largest.get_amountCents() << " cents made on " << largest.get_dateTime().time_since_epoch().count() << std::endl;
-    } catch (const std::exception &e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+    auto file_name{ "pay.csv"};
+    log.save(file_name);
 
     // Load items into different object:
-    Log another_log( "pay.csv");
+    Log another_log(file_name);
     // TODO: Test, that loading into another_log succeededs:
     return 0;
 
