@@ -1,4 +1,10 @@
 #include "PaymentSpec.h"
+#include <string>
+#ifdef _MSC_VER // Visual C++ ?
+    #define strcasecmp _stricmp // then use the function _stricmp() 
+#else
+    #include <strings.h> // for strcasecmp() function in POSIX C++
+#endif
 
 bool PaymentSpec::matches(const PaymentSpec & otherSpec)const {
     if (this == &otherSpec) // if comparing to self
@@ -34,7 +40,31 @@ PaymentSpec::CardType CardType){
 }
 std::istream & operator>>(std::istream & is, 
 PaymentSpec::CardType CardType){
-    //demo
+    if (is)
+    {
+        std::string tmp;
+        std::getline(is, tmp, csv_delimiter);
+        if (is)
+        {
+            bool found{ false };
+
+            for (size_t i{ 0 }; i < sizeof(PaymentSpec::CardType_str)/sizeof(PaymentSpec::CardType_str[0]); i++)
+            {
+                if (tmp.length() == PaymentSpec::CardType_str[i].length()
+					&& 0 == strcasecmp(tmp.c_str(), std::string(PaymentSpec::CardType_str[i]).c_str())) // case insensitive comparison
+                {
+                    CardType = static_cast<PaymentSpec::CardType>(i);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                CardType = PaymentSpec::CardType::ANY;
+        }
+    }
+
+    return is;
 }
 
 std::ostream & operator<<(std::ostream & os, 
@@ -44,7 +74,31 @@ PaymentSpec::CardScheme Cardscheme){
 }
 std::istream & operator>>(std::istream & is, 
 PaymentSpec::CardScheme Cardscheme){
-    //demo
+    if (is)
+    {
+        std::string tmp;
+        std::getline(is, tmp, csv_delimiter);
+        if (is)
+        {
+            bool found{ false };
+
+            for (size_t i{ 0 }; i < sizeof(PaymentSpec::CardScheme_str)/sizeof(PaymentSpec::CardScheme_str[0]); i++)
+            {
+                if (tmp.length() == PaymentSpec::CardScheme_str[i].length()
+					&& 0 == strcasecmp(tmp.c_str(), std::string(PaymentSpec::CardScheme_str[i]).c_str())) // case insensitive comparison
+                {
+                    Cardscheme = static_cast<PaymentSpec::CardScheme>(i);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                Cardscheme = PaymentSpec::CardScheme::ANY;
+        }
+    }
+
+    return is;
 }
 
 std::ostream & operator<<(std::ostream & os, 
@@ -54,7 +108,31 @@ PaymentSpec::PaymentType PaymentType){
 }
 std::istream & operator>>(std::istream & is, 
 PaymentSpec::PaymentType PaymentType){
-    //demo
+    if (is)
+    {
+        std::string tmp;
+        std::getline(is, tmp, csv_delimiter);
+        if (is)
+        {
+            bool found{ false };
+
+            for (size_t i{ 0 }; i < sizeof(PaymentSpec::PaymentType_str)/sizeof(PaymentSpec::PaymentType_str[0]); i++)
+            {
+                if (tmp.length() == PaymentSpec::PaymentType_str[i].length()
+					&& 0 == strcasecmp(tmp.c_str(), std::string(PaymentSpec::PaymentType_str[i]).c_str())) // case insensitive comparison
+                {
+                    PaymentType = static_cast<PaymentSpec::PaymentType>(i);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                PaymentType = PaymentSpec::PaymentType::ANY;
+        }
+    }
+
+    return is;
 }
 
 std::ostream & operator<<(std::ostream & os, const
@@ -80,5 +158,13 @@ void PaymentSpec::send_to(std::ostream & os) const
 
 void PaymentSpec::recv_from(std::istream & is)
 {
-    // demo
+    if (is)
+        is >> _cardType; // operator>>() processed csv_delimiter
+
+    if (is)
+        (is >> _cardScheme).ignore(); // call ignore() to skip csv_delimiter
+    
+    if (is)
+        (is >> _paymentType).ignore();
+    
 }

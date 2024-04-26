@@ -1,8 +1,11 @@
 #pragma once
 
 #include <memory>
+#include <vector>
+#include <algorithm>
 #include <optional>
 #include <stdexcept>
+#include <exception>
 #include "Payment.h"
 
 class Log
@@ -18,6 +21,12 @@ public:
         if (i < _count) return _items[i];
         throw std::out_of_range("Invalid index value");
     }
+
+    Log(const std::string & csv_file_name)
+    :Log(){ this->load(csv_file_name); }
+
+    void save(const std::string & csv_file_name) const;
+    void load(const std::string & csv_file_name);
     // Returns the current number of abstraction objects
     size_t get_count() const { return _count; }
 
@@ -33,7 +42,7 @@ public:
 
     // Looks for a matching abstraction object and returns the first found or default object
     Payment find_item(const Payment& query) const;
-    Payment find_item(const PaymentSpec& query) const;
+    Payment find_item(const PaymentSpec& query_spec) const;
 
     Payment find_largest_payment() const;
 
@@ -47,4 +56,5 @@ private:
 
     // The number of currently stored abstraction objects in the array _items
     size_t _count;
+    
 };

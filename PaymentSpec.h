@@ -19,6 +19,9 @@ public:
     
     void send_to(std::ostream & os) const;
     void recv_from(std::istream & is);
+
+    friend std::ostream & operator<<(std::ostream & os,
+    const PaymentSpec & spec);
     friend std::istream & operator>>(std::istream & is,
     PaymentSpec & spec);
 

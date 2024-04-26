@@ -1,6 +1,9 @@
 #include <iostream>
 #include <cassert>
 #include <algorithm>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
 #include "Payment.h"
 #include "Log.h"
 #include "PaymentSpec.h"
@@ -69,7 +72,38 @@ int main()
     show(log.find_largest_payment());
 
     cerr << "Payment average: " << log.find_average_amount() << "\n";
+    auto spec_bmx = std::make_shared<PaymentSpec>(new PaymentSpec(PaymentSpec::CardType::CREDIT, PaymentSpec::CardScheme::AMEX, PaymentSpec::PaymentType::AUTH) );
+    Payment p1("", "EUR", 1234, {}, spec_bmx);
+    cout << p1 << "\n";
+    // Save all items to file:
+    auto filename{ "payments.csv" };
+    ofstream ofs(filename);
+    if (ofs)
+        ofs << p1 << "\n";
+    ofs.close(); 
+    cout << "Saved...\n";
 
+    Payment p2;
+    ifstream ifs(filename);
+    if (ifs)
+        ifs >> p2;
+    ifs.close();
+    cout << "Read...\n"
+         << p2 << "\n----\n";
+
+    try {
+        log.load("payments.csv");
+        std::cout << "Loaded " << log.get_count() << " payments." << std::endl;
+        std::cout << "Average payment amount: $" << log.find_average_amount() << std::endl;
+        Payment largest = log.find_largest_payment();
+        std::cout << "Largest payment: " << largest.get_amountCents() << " cents made on " << largest.get_dateTime().time_since_epoch().count() << std::endl;
+    } catch (const std::exception &e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+
+    // Load items into different object:
+    Log another_log( "pay.csv");
+    // TODO: Test, that loading into another_log succeededs:
     return 0;
 
 }

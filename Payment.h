@@ -17,17 +17,13 @@ public:
 		const date_time& dateTime,
 		const std::shared_ptr<const PaymentSpec>& spec
 	);
-	Payment()
-        : _cardNumber{ "" }
-		, _currency{ "" }
-		, _amountCents{ 0 }
-		, _dateTime{ {} } 
-		, _spec{ } { };
+	Payment();
+
 	std::string get_cardNumber() const { return _cardNumber; }
 	std::string get_currency() const { return _currency; }
 	int get_amountCents() const { return _amountCents; }
 	date_time get_dateTime() const { return _dateTime; }
-	const spcPaymentSpec & get_spec() const { return _spec; }
+	const std::shared_ptr<const PaymentSpec> & get_spec() const { return _spec; }
 	
 	void send_to(std::ostream & os) const;
 	void recv_from(std::istream & is);

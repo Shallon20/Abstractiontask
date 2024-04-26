@@ -13,6 +13,13 @@ Payment::Payment(
 		, _dateTime{ dateTime } 
 		, _spec{ spec } { };
 
+Payment::Payment()
+	: _cardNumber{ "" }
+	, _currency{ "" }
+	, _amountCents{ 0 }
+	, _dateTime{ {} } 
+	, _spec{ } { };
+	
 std::ostream & operator<<(std::ostream & os, const
 Payment & item)
 {
@@ -28,11 +35,9 @@ item)
 
 void Payment::send_to(std::ostream &os) const
 {
-	os << Payment::_cardNumber << csv_delimiter
-	   << Payment::_currency << csv_delimiter
-	   << Payment::_amountCents << csv_delimiter
-	   << Payment::_dateTime << csv_delimiter
-	   << Payment::_spec << csv_delimiter;
+	os << _cardNumber << csv_delimiter
+	   << _currency << csv_delimiter
+	   << _amountCents << csv_delimiter;
 	if (_spec)
 	{
 		os << csv_delimiter;
@@ -40,7 +45,18 @@ void Payment::send_to(std::ostream &os) const
 	}
 }
 
-void recv_from(std::istream & is)
+void Payment::recv_from(std::istream & is)
 {
-	//demo
+	if (is)
+        (is >> _cardNumber).ignore(); // calling ignore() to skip csv_delimiter
+
+    if (is)
+       (is >> _currency).ignore();
+
+    if (is)
+       (is >> _amountCents).ignore();
+
+    auto temp_spec{ std::make_shared<PaymentSpec>() };
+    is >> *temp_spec; // alternatively: temp_spec->recv_from(is);
+    _spec = temp_spec; // replace the specification
 }
