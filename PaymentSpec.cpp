@@ -39,7 +39,7 @@ PaymentSpec::CardType cardType){
     PaymentSpec::CardType_str[static_cast<size_t>(cardType)];
 }
 std::istream & operator>>(std::istream & is, 
-PaymentSpec::CardType &cardType){
+PaymentSpec::CardType & cardType){
     if (is)
     {
         std::string tmp;
@@ -73,7 +73,7 @@ PaymentSpec::CardScheme cardScheme){
     PaymentSpec::CardScheme_str[static_cast<size_t>(cardScheme)];
 }
 std::istream & operator>>(std::istream & is, 
-PaymentSpec::CardScheme cardScheme){
+PaymentSpec::CardScheme & cardScheme){
     if (is)
     {
         std::string tmp;

@@ -15,15 +15,15 @@ public:
 		const std::string& currency, 
 		const int& amountCents,
 		const date_time& dateTime,
-		const std::shared_ptr<const PaymentSpec>& spec
+		spcPaymentSpec spec
 	);
-	Payment();
+	Payment() = default;
 
 	std::string get_cardNumber() const { return _cardNumber; }
 	std::string get_currency() const { return _currency; }
 	int get_amountCents() const { return _amountCents; }
 	date_time get_dateTime() const { return _dateTime; }
-	const std::shared_ptr<const PaymentSpec> & get_spec() const { return _spec; }
+	spcPaymentSpec get_spec() const { return _spec; }
 	
 	void send_to(std::ostream & os) const;
 	void recv_from(std::istream & is);
@@ -40,7 +40,7 @@ private:
 	std::string _currency;
 	int _amountCents;
 	date_time _dateTime;
-	std::shared_ptr<const PaymentSpec> _spec;
+	spcPaymentSpec _spec;
 
 };
 

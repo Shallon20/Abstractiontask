@@ -6,14 +6,14 @@ Payment::Payment(
 	const std::string& currency, 
 	const int& amountCents, 
 	const date_time& dateTime,
-	const std::shared_ptr<const PaymentSpec>& spec
+	spcPaymentSpec spec
 ) 
-	: _cardNumber{ cardNumber }
-		, _currency{ currency }
-		, _amountCents{ amountCents }
-		, _dateTime{ dateTime } 
-		, _spec{ spec } { };
-
+{   _cardNumber = cardNumber;
+	_currency = currency;
+	_amountCents= amountCents; 
+	_dateTime = dateTime; 
+	_spec = spec ;
+}
 std::ostream & operator<<(std::ostream & os, const
 Payment & item)
 {

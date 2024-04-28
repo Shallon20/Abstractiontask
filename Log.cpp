@@ -10,7 +10,7 @@ void Log::add_item(
 	const std::string& currency, 
 	const int& amountCents, 
 	const Payment::date_time& dateTime,
-    const std::shared_ptr<const PaymentSpec>& spec
+    spcPaymentSpec spec
 ) {
     if (_count < Log::MAX_SIZE)
     {
@@ -26,9 +26,18 @@ Payment Log::find_item(const Payment& query) const
 
     for (size_t i = 0; i < _count; i++)
     {
-        auto item_spec_p = _items[i].get_spec();
 
-        if (query_spec_p && item_spec_p && item_spec_p->matches(*query_spec_p))
+        if (query.get_cardNumber() != ""
+        && query.get_cardNumber() !=_items[i].get_cardNumber())
+        continue;
+        if (query.get_currency() != ""
+        && query.get_currency() !=_items[i].get_currency())
+        continue;
+        if (query.get_amountCents() != 0
+        && query.get_amountCents() !=_items[i].get_amountCents())
+        continue;
+        auto item_spec_p{ _items[i].get_spec() };
+        if(query_spec_p && item_spec_p && item_spec_p->matches(*query_spec_p))
         {
             return _items[i];
         }

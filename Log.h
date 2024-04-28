@@ -38,7 +38,7 @@ public:
         const std::string& currency, 
         const int& amountCents, 
         const Payment::date_time& dateTime,
-        const std::shared_ptr<const PaymentSpec>& spec
+        spcPaymentSpec spec
     );
 
     // Looks for a matching abstraction object and returns the first found or default object
