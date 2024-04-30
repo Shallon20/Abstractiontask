@@ -20,8 +20,8 @@ bool PaymentSpec::matches(const ItemSpec & itemSpec)const {
     // Check each BicycleSpec property, e.g.:
     
     
-    if (PaymentSpec::get_cardType() != itemSpec._cardType &&
-        _cardType != itemSpec._cardType)
+    if (PaymentSpec::get_cardType() != otherSpec._cardType &&
+        _cardType != otherSpec._cardType)
     {
         result = false;
     }

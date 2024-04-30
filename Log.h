@@ -16,6 +16,7 @@ class Log
 public:
     // Initializes the log
     Log() :_count{ 0 } { }
+
     const Item & operator[](size_t i) const {return
     this->get_item(i); }
 
@@ -39,8 +40,8 @@ public:
     const Item & find_item(const ItemSpec & otherSpec) const;
 
     // Looks for a matching abstraction object and returns the first found or default object
-    Item find_item(const Item& query) const;
-    Payment find_item(const PaymentSpec& query_spec) const;
+    Item& find_item(const Item& query) const;
+    Payment& find_item(const PaymentSpec& query_spec) const;
 
     Item find_largest_payment() const;
 
