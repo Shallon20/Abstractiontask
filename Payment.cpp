@@ -6,13 +6,11 @@ Payment::Payment(
 	const std::string& currency, 
 	const int& amountCents, 
 	const date_time& dateTime,
-	spcPaymentSpec spec
 ) 
 {   _cardNumber = cardNumber;
 	_currency = currency;
 	_amountCents= amountCents; 
 	_dateTime = dateTime; 
-	_spec = spec ;
 }
 std::ostream & operator<<(std::ostream & os, const
 Payment & item)
@@ -29,6 +27,9 @@ item)
 
 void Payment::send_to(std::ostream &os) const
 {
+	Item::send_to(os);
+	// sends ⌊Abstraction⌋ properties to the stream object os
+
 	os << _cardNumber << csv_delimiter
 	   << _currency << csv_delimiter
 	   << _amountCents;

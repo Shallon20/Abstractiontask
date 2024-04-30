@@ -6,20 +6,22 @@
 #include <optional>
 #include <stdexcept>
 #include <exception>
-#include "Payment.h"
-#include "PaymentSpec.h"
+//#include "Payment.h"
+//#include "PaymentSpec.h"
+#include "Item.h"
+#include "ItemSpec.h"
 
 class Log
 {
 public:
     // Initializes the log
     Log() :_count{ 0 } { }
-    const Payment & operator[](size_t i) const {return
+    const Item & operator[](size_t i) const {return
     this->get_item(i); }
 
-    const Payment & get_item(size_t i) const
+    const Item & get_item(size_t i) const
     {
-        if (i < this->_count) return this->_items[i];
+        if (i < _count) return *_items[i];
         throw std::out_of_range("Invalid index value");
     }
 
@@ -33,19 +35,14 @@ public:
 
     // From passed property values, creates and adds new abstraction object in an array _items
     // (replace parameters to match your property types and identifiers)
-    void add_item(
-        const std::string& cardNumber, 
-        const std::string& currency, 
-        const int& amountCents, 
-        const Payment::date_time& dateTime,
-        spcPaymentSpec spec
-    );
+    void add_item(std::shared_ptr<Item> newitem);
+    const Item & find_item(const ItemSpec & otherSpec) const;
 
     // Looks for a matching abstraction object and returns the first found or default object
-    Payment find_item(const Payment& query) const;
+    Item find_item(const Item& query) const;
     Payment find_item(const PaymentSpec& query_spec) const;
 
-    Payment find_largest_payment() const;
+    Item find_largest_payment() const;
 
     double find_average_amount() const;
 private:
@@ -53,7 +50,7 @@ private:
     static const size_t MAX_SIZE{ 10 };
 
     // An array container for storing abstraction objects
-    Payment _items[Log::MAX_SIZE];
+    std::shared_ptr<Item> _items[Log::MAX_SIZE];
 
     // The number of currently stored abstraction objects in the array _items
     size_t _count;

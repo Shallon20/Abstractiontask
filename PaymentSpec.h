@@ -4,8 +4,9 @@
 #include <chrono>
 #include <memory>
 #include <iostream>
+#include "ItemSpec.h"
 
-class PaymentSpec
+class PaymentSpec : public ItemSpec
 {
 public:
     
@@ -17,13 +18,13 @@ public:
     static constexpr std::string_view CardScheme_str[] { "Any", "Visa", "Mastercard", "AmEx", "Discover" };
     static constexpr std::string_view PaymentType_str[] { "Any", "Auth", "Chargeback" };
     
-    void send_to(std::ostream & os) const;
+    void send_to(std::ostream & os) const override;
     void recv_from(std::istream & is);
 
     friend std::istream & operator>>(std::istream & is,
     PaymentSpec & spec);
 
-    bool matches(const PaymentSpec & otherSpec) const;
+    bool matches(const ItemSpec & itemSpec) const override;
     PaymentSpec() = default;
 
     PaymentSpec(CardType cardType, CardScheme cardScheme, PaymentType paymentType)
@@ -57,3 +58,4 @@ std::ostream & operator<<(std::ostream & os, const
 PaymentSpec & spec);
 
 constexpr auto csv_delimiter { ';'};
+

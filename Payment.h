@@ -5,27 +5,23 @@
 #include <chrono>
 #include <iostream>
 #include "PaymentSpec.h"
+#include "ItemSpec.h"
+#include "Item.h"
 
-class Payment
+class Payment : public Item
 {
 public:
 	typedef std::chrono::system_clock::time_point date_time;
-	Payment(
-		const std::string& cardNumber,
-		const std::string& currency, 
-		const int& amountCents,
-		const date_time& dateTime,
-		spcPaymentSpec spec
-	);
+	
 	Payment() = default;
 
 	std::string get_cardNumber() const { return _cardNumber; }
 	std::string get_currency() const { return _currency; }
 	int get_amountCents() const { return _amountCents; }
 	date_time get_dateTime() const { return _dateTime; }
-	spcPaymentSpec get_spec() const { return _spec; }
+ 
 	
-	void send_to(std::ostream & os) const;
+	void send_to(std::ostream & os) const override;
 	void recv_from(std::istream & is);
 	friend std::istream & operator>>(std::istream &is,
 	Payment & item);

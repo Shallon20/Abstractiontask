@@ -11,7 +11,7 @@
 using namespace std;
 
 // outputs abstraction object properties to the console window
-void show(const Payment& item)
+void show(const Item& item)
 {
     cout << item << "\n";
 }

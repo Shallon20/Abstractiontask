@@ -6,17 +6,22 @@
     #include <strings.h> // for strcasecmp() function in POSIX C++
 #endif
 
-bool PaymentSpec::matches(const PaymentSpec & otherSpec)const {
-    if (this == &otherSpec) // if comparing to self
+bool PaymentSpec::matches(const ItemSpec & itemSpec)const {
+    if (this == &itemSpec) // if comparing to self
         return true;
 
     auto result{ true };
+    auto temp{ dynamic_cast<const PaymentSpec*>(&itemSpec) };
+    if (nullptr == temp)
+        return false; // if itemSpec doesn't refer to ⌊Abstraction⌋Spec (or derived) class instance
 
+    // cast to reference type for actual comparison of properties
+    const PaymentSpec & otherSpec{ *temp };
     // Check each BicycleSpec property, e.g.:
     
     
-    if (PaymentSpec::get_cardType() != otherSpec._cardType &&
-        _cardType != otherSpec._cardType)
+    if (PaymentSpec::get_cardType() != itemSpec._cardType &&
+        _cardType != itemSpec._cardType)
     {
         result = false;
     }
