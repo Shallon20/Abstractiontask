@@ -4,6 +4,7 @@
 #include <memory>
 #include <chrono>
 #include <iostream>
+
 #include "PaymentSpec.h"
 #include "ItemSpec.h"
 #include "Item.h"
@@ -14,7 +15,13 @@ public:
 	typedef std::chrono::system_clock::time_point date_time;
 	
 	Payment() = default;
-
+	Payment(std::string cardNumber, std::string currency,int amountCents, date_time dateTime, std::shared_ptr<const PaymentSpec> spec)
+		: Item(id, spec),
+		  _cardNumber{ cardNumber },
+		  _currency { currency },
+		  _amountCents { amountCents },
+		  _dateTime { _dateTime } 
+		   {}
 	std::string get_cardNumber() const { return _cardNumber; }
 	std::string get_currency() const { return _currency; }
 	int get_amountCents() const { return _amountCents; }
@@ -22,9 +29,10 @@ public:
  
 	
 	void send_to(std::ostream & os) const override;
-	void recv_from(std::istream & is);
-	friend std::istream & operator>>(std::istream &is,
-	Payment & item);
+	void recv_from(std::istream & is) override;
+	
+	/*std::istream & operator>>(std::istream &is,
+	Payment & item);*/
 
 	inline bool operator <(const Payment& other) const
 	{
@@ -36,9 +44,9 @@ private:
 	std::string _currency;
 	int _amountCents;
 	date_time _dateTime;
-	spcPaymentSpec _spec;
+	//spcPaymentSpec _spec;
 
 };
 
-std::ostream & operator<<(std::ostream & os, const
-Payment & item);
+/*std::ostream & operator<<(std::ostream & os, const
+Payment & item); */

@@ -53,7 +53,7 @@ const Item & Log::find_item(const ItemSpec& otherSpec) const
     return def; // return the 'default' value object
 }
 
- Payment Log::find_largest_payment() const
+ double Log::find_largest_payment() const
  {
     std::vector<Item> payments(std::begin(_items), std::begin(_items)+_count);
     std::sort(payments.begin(), payments.end());

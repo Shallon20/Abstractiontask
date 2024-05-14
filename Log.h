@@ -16,9 +16,10 @@ class Log
 public:
     // Initializes the log
     Log() :_count{ 0 } { }
-
-    const Item & operator[](size_t i) const {return
-    this->get_item(i); }
+    size_t get_count() const { return _count; }
+    const Item & operator[](size_t i) const 
+    {
+        return get_item(i); }
 
     const Item & get_item(size_t i) const
     {
@@ -26,23 +27,21 @@ public:
         throw std::out_of_range("Invalid index value");
     }
 
-    Log(const std::string & csv_file_name)
+    /*Log(const std::string & csv_file_name)
     :Log(){ this->load(csv_file_name); }
-
+*/
     void save(const std::string & csv_file_name) const;
     void load(const std::string & csv_file_name);
     // Returns the current number of abstraction objects
-    size_t get_count() const { return _count; }
+    
 
     // From passed property values, creates and adds new abstraction object in an array _items
     // (replace parameters to match your property types and identifiers)
-    void add_item(std::shared_ptr<Item> newitem);
-    const Item & find_item(const ItemSpec & otherSpec) const;
+    void add_item(std::shared_ptr<Item> newItem);
+    const Item & find_item(const ItemSpec & spec_query) const;
 
     // Looks for a matching abstraction object and returns the first found or default object
-    Item& find_item(const Item& query) const;
-    Payment& find_item(const PaymentSpec& query_spec) const;
-
+    
     Item find_largest_payment() const;
 
     double find_average_amount() const;

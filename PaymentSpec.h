@@ -3,6 +3,7 @@
 #include <string>
 #include <chrono>
 #include <memory>
+#include <cstddef>
 #include <iostream>
 #include "ItemSpec.h"
 
@@ -19,12 +20,13 @@ public:
     static constexpr std::string_view PaymentType_str[] { "Any", "Auth", "Chargeback" };
     
     void send_to(std::ostream & os) const override;
-    void recv_from(std::istream & is);
+    void recv_from(std::istream & is) override;
 
-    friend std::istream & operator>>(std::istream & is,
-    PaymentSpec & spec);
+    /*friend std::istream & operator>>(std::istream & is,
+    PaymentSpec & spec);*/
 
-    bool matches(const ItemSpec & itemSpec) const override;
+    bool matches(const ItemSpec & otherSpec) const override;
+    
     PaymentSpec() = default;
 
     PaymentSpec(CardType cardType, CardScheme cardScheme, PaymentType paymentType)

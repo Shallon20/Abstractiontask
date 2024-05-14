@@ -10,7 +10,7 @@ bool PaymentSpec::matches(const ItemSpec & itemSpec)const {
     if (this == &itemSpec) // if comparing to self
         return true;
 
-    auto result{ true };
+    bool result{ true };
     auto temp{ dynamic_cast<const PaymentSpec*>(&itemSpec) };
     if (nullptr == temp)
         return false; // if itemSpec doesn't refer to ⌊Abstraction⌋Spec (or derived) class instance
@@ -20,28 +20,29 @@ bool PaymentSpec::matches(const ItemSpec & itemSpec)const {
     // Check each BicycleSpec property, e.g.:
     
     
-    if (PaymentSpec::get_cardType() != otherSpec._cardType &&
-        _cardType != otherSpec._cardType)
+    if (otherSpec.get_cardType() != PaymentSpec::CardType::ANY &&
+        otherSpec.get_cardType() != this->_cardType)
     {
         result = false;
     }
-    if (PaymentSpec::get_cardScheme() != otherSpec._cardScheme &&
-        _cardScheme != otherSpec._cardScheme)
+    if (otherSpec.get_cardScheme() != PaymentSpec::CardScheme::VISA &&
+        otherSpec.get_cardScheme() != this->_cardScheme)
     {
         result = false;
     }
-    if (PaymentSpec::get_paymentType() != otherSpec._paymentType &&
-        _paymentType != otherSpec._paymentType)
+    if (otherSpec.get_paymentType() != PaymentSpec::PaymentType::CHARGEBACK &&
+        otherSpec.get_paymentType() != otherSpec._paymentType)
     {
         result = false;
     }
     
 return result;
 }
+
 std::ostream & operator<<(std::ostream & os, 
 PaymentSpec::CardType cardType){
-    return os<< 
-    PaymentSpec::CardType_str[static_cast<size_t>(cardType)];
+os<< PaymentSpec::CardType_str[static_cast<size_t>(cardType)];
+return os;
 }
 std::istream & operator>>(std::istream & is, 
 PaymentSpec::CardType & cardType){
@@ -74,8 +75,8 @@ PaymentSpec::CardType & cardType){
 
 std::ostream & operator<<(std::ostream & os, 
 PaymentSpec::CardScheme cardScheme){
-    return os<< 
-    PaymentSpec::CardScheme_str[static_cast<size_t>(cardScheme)];
+    os<< PaymentSpec::CardScheme_str[static_cast<size_t>(cardScheme)];
+return os;
 }
 std::istream & operator>>(std::istream & is, 
 PaymentSpec::CardScheme & cardScheme){
@@ -108,8 +109,8 @@ PaymentSpec::CardScheme & cardScheme){
 
 std::ostream & operator<<(std::ostream & os, 
 PaymentSpec::PaymentType paymentType){
-    return os<< 
-    PaymentSpec::CardType_str[static_cast<size_t>(paymentType)];
+    os<< PaymentSpec::CardType_str[static_cast<size_t>(paymentType)];
+return os;
 }
 std::istream & operator>>(std::istream & is, 
 PaymentSpec::PaymentType & paymentType){
@@ -140,7 +141,7 @@ PaymentSpec::PaymentType & paymentType){
     return is;
 }
 
-std::ostream & operator<<(std::ostream & os, const
+/*std::ostream & operator<<(std::ostream & os, const
 PaymentSpec & spec)
 {
     spec.send_to(os);
@@ -153,7 +154,7 @@ std::istream & operator>>(std::istream & is, PaymentSpec
     item.recv_from(is);
     return is;
 }
-
+*/
 void PaymentSpec::send_to(std::ostream & os) const
 {
     os << _cardType<< csv_delimiter

@@ -29,16 +29,8 @@ public:
         return _spec;
     }
 
-    virtual void send_to(std::ostream & os) const
-    {
-        os << _id;
-
-        if (_spec)
-        {
-            os << ';';
-            _spec->send_to(os);
-        }
-    }
+    virtual void send_to(std::ostream & os) const;
+    virtual void recv_from(std::istream & os) const;
 
 protected:
     // for changing the specification only in this and in derived classes:
@@ -53,3 +45,4 @@ private:
 };
 
 std::ostream & operator<<(std::ostream & os, const Item & item);
+std::istream & operator>>(std::istream & os, const Item & item);
