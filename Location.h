@@ -9,19 +9,20 @@ public:
 Location() = default;
 Location(
     int id, 
-    double distance, 
+    int amountCents, 
     std::string name,
     std::shared_ptr<const LocationSpec> spec)
                  
     :   Item(id, spec), 
-        _distance{ distance } 
-        _name { name }
+        _amountCents{ amountCents },
+        _name{ name }
         { }
-    double get_distance() const { return _distance; }
-    void send_to(std::ostream & os)const override;
+    int get_amountCents() const { return _amountCents; }
+    std::string get_name() const { return _name; }
+    void send_to(std::ostream & os) const override;
     void recv_from(std::istream & is)override;
 private:
-    double _distance;
+    int _amountCents;
     std::string _name;
     
 };

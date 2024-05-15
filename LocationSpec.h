@@ -1,5 +1,5 @@
 #pragma once
-// model- position type- area
+
 #include "ItemSpec.h"
 #include <cstddef> // for std::size_t
 #include <iostream>
@@ -11,17 +11,17 @@ enum class Area { ANY, URBAN, RURAL };
 static constexpr std::string_view Area_str[]{ "Any", "Urban", "Rural" };
 
 LocationSpec() = default;
-LocationSpec(const std::string & position, Area area)
-: ItemSpec(), _position(position), _area(area) { }
+LocationSpec(const std::string & currency, Area area)
+: ItemSpec(), _currency(currency), _area(area) { }
 
-std::string get_position() const { return _position; }
+std::string get_currency() const { return _currency; }
 Area get_area() const { return _area; }
 
 void send_to(std::ostream & os) const override;
 void recv_from(std::istream & is) override;
 bool matches(const ItemSpec & itemSpec) const override;
 private:
-std::string _position;
+std::string _currency;
 Area _area;
 };
 

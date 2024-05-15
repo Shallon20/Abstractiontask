@@ -15,7 +15,7 @@ void Item::send_to(std::ostream & os) const
 {
     os << _id;
     if (_spec){
-        _spec ->send_to(os)
+        _spec ->send_to(os);
     }
 }
 void Item::recv_from(std::istream & is)
@@ -24,9 +24,9 @@ void Item::recv_from(std::istream & is)
         is >> _id;
         _spec.reset();
         // Unfinished as it requires additional information on the serialized object:
-// auto temp_spec{ std::make_shared<BicycleSpec>() };
-// is >> *temp_spec; // alternative: temp_spec->recv_from(is);
-// set_spec(temp_spec); // replaces specification
+       // auto temp_spec{ std::make_shared<PaymentSpec>() };
+       // is >> *temp_spec; // alternative: temp_spec->recv_from(is);
+       // set_spec(temp_spec); // replaces specification
 
     }
 }

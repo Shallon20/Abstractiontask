@@ -1,18 +1,7 @@
 #include "Payment.h"
 #include <string.h>
 
-/*Payment::Payment(
-	const std::string& cardNumber, 
-	const std::string& currency, 
-	const int& amountCents, 
-	const date_time& dateTime,
-) 
-{   _cardNumber = cardNumber;
-	_currency = currency;
-	_amountCents= amountCents; 
-	_dateTime = dateTime; 
-}*/
-std::ostream & operator<<(std::ostream & os, const
+/*std::ostream & operator<<(std::ostream & os, const
 Payment & item)
 {
 	item.send_to(os);
@@ -24,7 +13,7 @@ item)
 	item.recv_from(is);
 	return is;
 }
-
+*/
 void Payment::send_to(std::ostream &os) const
 {
 	Item::send_to(os);

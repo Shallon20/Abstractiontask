@@ -23,7 +23,8 @@ public:
 
     const Item & get_item(size_t i) const
     {
-        if (i < _count) return *_items[i];
+        if (i < _count) 
+            return *_items[i];
         throw std::out_of_range("Invalid index value");
     }
 
@@ -42,7 +43,7 @@ public:
 
     // Looks for a matching abstraction object and returns the first found or default object
     
-    Item find_largest_payment() const;
+    //const double find_largest_payment() const;
 
     double find_average_amount() const;
 private:

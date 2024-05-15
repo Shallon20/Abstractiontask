@@ -17,9 +17,9 @@ void show(const Item& item)
     cout << item << "\n";
 }
 
-const Payment get_largest_payment(const Log& log) {
-    return log.find_largest_payment();
-}
+//const  Payment get_largest_payment(const Log& log) {
+ //   return log.find_largest_payment();
+//}
 
 double get_average_amount(const Log& log) {
     return log.find_average_amount();
@@ -67,20 +67,20 @@ int main()
     show(log.find_item(*spec_cards));
     show(log.find_item(PaymentSpec{}));
     show(log.find_item(PaymentSpec{PaymentSpec::CardType::DEBIT, PaymentSpec::CardScheme::ANY, PaymentSpec::PaymentType::AUTH}));
-    show(log.find_item(Payment{"1034277890123456", "EUR", 1000, test_time - std::chrono::hours(60), std::make_shared<PaymentSpec>()}));
+   // show(log.find_item(Payment{"1034277890123456", "EUR", 1000, test_time - std::chrono::hours(60), std::make_shared<PaymentSpec>()}));
     // Provides querying values (some can be default to denote unset criteria)
 
     auto p3{std::make_shared<Location>(35, 2549.45, "Kipsala Bank", std::make_shared<LocationSpec>("East", LocationSpec::Area::URBAN))};
     log.add_item(p3);
 
     show(log.find_item(LocationSpec{"", LocationSpec::Area::RURAL}));
-/*
+
     cerr << "The largest payment:\n";
-    show(log.find_largest_payment());
+    //show(log.find_largest_payment());
 
     cerr << "Payment average: " << log.find_average_amount() << "\n";
     // Save all items to file:
-    
+   /*
     auto file_name{ "pay.csv"};
     log.save(file_name);
 

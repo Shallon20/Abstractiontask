@@ -59,5 +59,4 @@ std::istream & operator>>(std::istream & is, PaymentSpec::PaymentType & paymentT
 std::ostream & operator<<(std::ostream & os, const
 PaymentSpec & spec);
 
-constexpr auto csv_delimiter { ';'};
 

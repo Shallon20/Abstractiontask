@@ -53,7 +53,7 @@ const Item & Log::find_item(const ItemSpec& otherSpec) const
     return def; // return the 'default' value object
 }
 
- double Log::find_largest_payment() const
+/* double Log::find_largest_payment() const
  {
     std::vector<Item> payments(std::begin(_items), std::begin(_items)+_count);
     std::sort(payments.begin(), payments.end());
@@ -68,7 +68,7 @@ const Item & Log::find_item(const ItemSpec& otherSpec) const
     }
     return sum/(double)_count/100;
  }
-
+*/
  void Log::save(const std::string & csv_file_name) const
 {
      std::ofstream os{ csv_file_name};
@@ -85,7 +85,7 @@ void Log::load(const std::string & csv_file_name)
 
     while (this->_count < Log::MAX_SIZE && !is.eof())
     {
-        is >> this->_items[_count]; // or: this->_items[_count].recv_from(is);
+      //  is >> this->_items[_count]; // or: this->_items[_count].recv_from(is);
         if (is) _count++;
     }
 };

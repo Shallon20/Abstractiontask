@@ -41,7 +41,7 @@ return result;
 
 std::ostream & operator<<(std::ostream & os, 
 PaymentSpec::CardType cardType){
-os<< PaymentSpec::CardType_str[static_cast<size_t>(cardType)];
+os << PaymentSpec::CardType_str[static_cast<size_t>(cardType)];
 return os;
 }
 std::istream & operator>>(std::istream & is, 
@@ -157,9 +157,9 @@ std::istream & operator>>(std::istream & is, PaymentSpec
 */
 void PaymentSpec::send_to(std::ostream & os) const
 {
-    os << _cardType<< csv_delimiter
-       << _cardScheme<< csv_delimiter
-       << _paymentType;
+    os << csv_delimiter<< _cardType
+       << csv_delimiter<< _cardScheme
+       <<csv_delimiter << _paymentType;
 }
 
 void PaymentSpec::recv_from(std::istream & is)

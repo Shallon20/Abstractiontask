@@ -23,8 +23,8 @@ return false; // if itemSpec doesn't refer to GuitarSpec (or derived) class inst
 // cast to reference type for actual comparison of properties
 const LocationSpec& otherSpec{ *temp };
 
-if (otherSpec.get_position() != ""
-&& otherSpec.get_position() != this->_position)
+if (otherSpec.get_currency() != ""
+&& otherSpec.get_currency() != this->_currency)
 result = false;
 
 if (otherSpec.get_area() != LocationSpec::Area::ANY
@@ -36,14 +36,14 @@ return result;
 
 void LocationSpec::send_to(std::ostream& os) const
 {
-os << _position << csv_delimiter
+os << _currency << csv_delimiter
 << Area_str[static_cast<size_t>(_area)];
 }
 
 void LocationSpec::recv_from(std::istream & is)
 {
 if (is)
-getline(is >> std::ws, _position, csv_delimiter); // also skips the delimiter
+getline(is >> std::ws, _currency, csv_delimiter); // also skips the delimiter
 if (is)
 is >> _area;
 }
