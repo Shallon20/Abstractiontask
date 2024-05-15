@@ -31,7 +31,8 @@ public:
 
     virtual void send_to(std::ostream & os) const;
     virtual void recv_from(std::istream & os);
-
+    
+    double get_payments() const;
 protected:
     // for changing the specification only in this and in derived classes:
     void set_spec(std::shared_ptr<const ItemSpec> spec)
@@ -42,6 +43,7 @@ protected:
 private:
     int _id;
     std::shared_ptr<const ItemSpec> _spec;
+    double _payments;
 };
 
 std::ostream & operator<<(std::ostream & os, const Item & item);

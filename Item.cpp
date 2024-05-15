@@ -30,3 +30,7 @@ void Item::recv_from(std::istream & is)
 
     }
 }
+
+double Item::get_payments() const {
+    return _payments;
+}

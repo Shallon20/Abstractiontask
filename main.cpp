@@ -17,10 +17,10 @@ void show(const Item& item)
     cout << item << "\n";
 }
 
-//const  Payment get_largest_payment(const Log& log) {
- //   return log.find_largest_payment();
-//}
-
+const  Payment & get_largest_payment(const Log& log) {
+   return log.find_largest_payment();
+}
+ 
 double get_average_amount(const Log& log) {
     return log.find_average_amount();
 }
@@ -67,7 +67,7 @@ int main()
     show(log.find_item(*spec_cards));
     show(log.find_item(PaymentSpec{}));
     show(log.find_item(PaymentSpec{PaymentSpec::CardType::DEBIT, PaymentSpec::CardScheme::ANY, PaymentSpec::PaymentType::AUTH}));
-   // show(log.find_item(Payment{"1034277890123456", "EUR", 1000, test_time - std::chrono::hours(60), std::make_shared<PaymentSpec>()}));
+  //  show(log.find_item(Payment{"1034277890123456", "EUR", 1000, test_time - std::chrono::hours(60), std::make_shared<PaymentSpec>()}));
     // Provides querying values (some can be default to denote unset criteria)
 
     auto p3{std::make_shared<Location>(35, 2549.45, "Kipsala Bank", std::make_shared<LocationSpec>("East", LocationSpec::Area::URBAN))};

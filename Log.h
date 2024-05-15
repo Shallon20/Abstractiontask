@@ -6,7 +6,7 @@
 #include <optional>
 #include <stdexcept>
 #include <exception>
-//#include "Payment.h"
+#include "Payment.h"
 //#include "PaymentSpec.h"
 #include "Item.h"
 #include "ItemSpec.h"
@@ -43,7 +43,7 @@ public:
 
     // Looks for a matching abstraction object and returns the first found or default object
     
-    //const double find_largest_payment() const;
+    const Payment & find_largest_payment() const;
 
     double find_average_amount() const;
 private:
