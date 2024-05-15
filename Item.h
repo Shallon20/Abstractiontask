@@ -30,7 +30,7 @@ public:
     }
 
     virtual void send_to(std::ostream & os) const;
-    virtual void recv_from(std::istream & os) const;
+    virtual void recv_from(std::istream & os);
 
 protected:
     // for changing the specification only in this and in derived classes:
@@ -45,4 +45,4 @@ private:
 };
 
 std::ostream & operator<<(std::ostream & os, const Item & item);
-std::istream & operator>>(std::istream & os, const Item & item);
+std::istream & operator>>(std::istream & os, Item & item);
