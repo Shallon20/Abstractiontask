@@ -14,5 +14,4 @@ void Location::recv_from(std::istream & is)
 
     if (is)
        (is >> _amountCents).ignore();
-       
 }

@@ -1,7 +1,20 @@
 #include "Payment.h"
 #include <string.h>
-
-/*std::ostream & operator<<(std::ostream & os, const
+/*
+Payment::Payment(
+	const std::string& cardNumber, 
+	const std::string& currency, 
+	const int& amountCents, 
+	const date_time& dateTime,
+	spcPaymentSpec spec
+) 
+{   _cardNumber = cardNumber;
+	_currency = currency;
+	_amountCents= amountCents; 
+	_dateTime = dateTime; 
+	_spec = spec ;
+}
+std::ostream & operator<<(std::ostream & os, const
 Payment & item)
 {
 	item.send_to(os);
@@ -16,18 +29,19 @@ item)
 */
 void Payment::send_to(std::ostream &os) const
 {
-	Item::send_to(os);
-	// sends ⌊Abstraction⌋ properties to the stream object os
-
-	os << _cardNumber << csv_delimiter
-	   << _currency << csv_delimiter
-	   << _amountCents;
+	os << csv_delimiter << _cardNumber
+	   << csv_delimiter << _currency
+	   << csv_delimiter << _amountCents
+	   << csv_delimiter << _dateTime;
+	/*if (_spec)
+	{
+		os << csv_delimiter;
+		_spec->send_to(os);
+	}*/
 }
 
 void Payment::recv_from(std::istream & is)
 {
-	Item::recv_from(is);
-
 	if (is)
         (is >> _cardNumber).ignore(); // calling ignore() to skip csv_delimiter
 
@@ -37,11 +51,7 @@ void Payment::recv_from(std::istream & is)
     if (is)
        (is >> _amountCents).ignore();
 
-}
-
-double find_largest_payment() const{
-	return find_largest_payment();
-}
-double find_average_amount() const{
-	return find_average_amount();
+    //auto temp_spec{ std::make_shared<PaymentSpec>() };
+    //is >> *temp_spec; // alternatively: temp_spec->recv_from(is);
+   // _spec = temp_spec; // replace the specification
 }
