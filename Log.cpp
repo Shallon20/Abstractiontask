@@ -53,14 +53,14 @@ const Item & Log::find_item(const ItemSpec& otherSpec) const
     return def; // return the 'default' value object
 }
 
- double Log::find_largest_payment() const
+ double Payment::find_largest_payment() const
  {
     std::vector<Item> payments(std::begin(_items), std::begin(_items)+_count);
     std::sort(payments.begin(), payments.end());
     return payments.back();
  }
 
- double Log::find_average_amount() const
+ double Payment::find_average_amount() const
  {
     double sum = 0.0;
     for (size_t i = 0 ; i < _count ; i++){

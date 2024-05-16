@@ -43,9 +43,7 @@ public:
 
     // Looks for a matching abstraction object and returns the first found or default object
     
-    const Payment & find_largest_payment() const;
-
-    double find_average_amount() const;
+    
 private:
     // The maximum number of abstraction objects that can be stored
     static const size_t MAX_SIZE{ 10 };

@@ -38,3 +38,10 @@ void Payment::recv_from(std::istream & is)
        (is >> _amountCents).ignore();
 
 }
+
+double find_largest_payment() const{
+	return find_largest_payment();
+}
+double find_average_amount() const{
+	return find_average_amount();
+}
