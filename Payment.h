@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 #include <chrono>
 #include <iostream>
 #include "PaymentSpec.h"
@@ -13,7 +14,7 @@ public:
 	typedef std::chrono::system_clock::time_point date_time;
 	Payment() = default;
 	Payment(
-		unsigned id,
+		int id,
 		const std::string& cardNumber,
 		const std::string& currency, 
 		const int& amountCents,
@@ -42,9 +43,9 @@ public:
 	{
 		return _amountCents < other._amountCents;
 	}*/
-	double find_largest_payment() const;
+	//double find_largest_payment() const;
 
-    double find_average_amount() const;
+    //double find_average_amount() const;
 
 private:
 	std::string _cardNumber;

@@ -11,16 +11,15 @@
 
 using namespace std;
 
-// outputs abstraction object properties to the console window
 void show(const Item& item)
 {
     cout << item << "\n";
 }
-
+/*
 Payment cardScheme(const Log& log)
 {
     int max_pos{-1};
-/*
+
     for (auto i{0}; i < log.get_count(); i++)
     {
         auto ptr { dynamic_cast<const PaymentSpec*>(&*log[i].get_spec()) }; // or dynamic_cast<const Bicycle*>(&log[i]) if the property is in the abstration class
@@ -30,7 +29,7 @@ Payment cardScheme(const Log& log)
         max_pos = i; 
     }
     :::
-*/
+
     if (max_pos >= 0)
 	{
 		auto item_p { & log[max_pos] };
@@ -41,15 +40,15 @@ Payment cardScheme(const Log& log)
 	{
 		return Payment{}; // if there is no bicycle in the log
 	}
-}
-double Payment get_largest_payment(const Log& log) {
+}*/
+
+/*double get_largest_payment(const Log& log) {
     return log.find_largest_payment();
 }
 
 double get_average_amount(const Log& log) {
     return log.find_average_amount();
-}
-
+}*/
 // solution entry function
 int main()
 {
@@ -58,16 +57,16 @@ int main()
  // Create shared pointers for PaymentSpec objects
     
     auto spec_bmx{std::make_shared<PaymentSpec>(PaymentSpec::CardType::CREDIT,PaymentSpec::CardScheme::VISA, PaymentSpec::PaymentType::AUTH)};
-    auto p1{std::make_shared<Payment>("1234567890123456", "USD", 1520, test_time - std::chrono::hours(100), spec_bmx)};
+    auto p1{std::make_shared<Payment>(8, "1234567890123456", "USD", 1520, test_time - std::chrono::hours(100), spec_bmx)};
     log.add_item(p1);
 
-    auto p2{std::make_shared<Payment>("7234567890123456", "EUR", 1520, test_time - std::chrono::hours(180), std::make_shared<PaymentSpec>(PaymentSpec::CardType::CREDIT, PaymentSpec::CardScheme::MASTERCARD, PaymentSpec::PaymentType::CHARGEBACK))};
+    auto p2{std::make_shared<Payment>(2 ,"7234567890123456", "EUR", 1520, test_time - std::chrono::hours(180), std::make_shared<PaymentSpec>(PaymentSpec::CardType::CREDIT, PaymentSpec::CardScheme::MASTERCARD, PaymentSpec::PaymentType::CHARGEBACK))};
     log.add_item(p2);
 
     auto spec_cards{std::make_shared<PaymentSpec>(PaymentSpec
     ::CardType::EBT, PaymentSpec::CardScheme::MASTERCARD, PaymentSpec::PaymentType::CHARGEBACK)};
-    log.add_item(std::make_shared<Payment>("1034277890123456", "EUR", 1000, test_time - std::chrono::hours(60), spec_cards));
-    log.add_item(std::make_shared<Payment>("1034277890123456", "USD", 2434, test_time - std::chrono::hours(80), spec_cards));
+    log.add_item(std::make_shared<Payment>(5, "1034277890123456", "EUR", 1000, test_time - std::chrono::hours(60), spec_cards));
+    log.add_item(std::make_shared<Payment>(3, "1034277890123456", "USD", 2434, test_time - std::chrono::hours(80), spec_cards));
 
     show(log.find_item(PaymentSpec(PaymentSpec::CardType::ANY, PaymentSpec::CardScheme::ANY, PaymentSpec::PaymentType::ANY)));
     
@@ -81,13 +80,11 @@ int main()
 
     show(log.find_item(LocationSpec{"", LocationSpec::CardType::VIRTUAL }));
     
-    show(cardScheme(log));
-    
-    cerr << "The largest payment:\n";
-    show(log.find_largest_payment());
 
-    cerr << "Payment average: " << log.find_average_amount() << "\n";
-    // Save all items to file:
+    
+    //cerr << "The largest payment:\n" << get_largest_payment(log) << "\n";
+
+    //cerr << "Payment average: " << get_average_amount(log) << "\n";
     
     return 0;
 }

@@ -51,6 +51,9 @@ public:
     //Payment find_item(const Payment& query) const;
     //Payment find_item(const PaymentSpec& query_spec) const;
 
+    //double find_largest_payment() const;
+
+    //double find_average_amount() const;
     //Payment find_largest_payment() const;
 
     //double find_average_amount() const;

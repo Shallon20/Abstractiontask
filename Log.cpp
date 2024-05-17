@@ -34,6 +34,23 @@ const Item& Log::find_item(const ItemSpec& query_spec) const
 }
 
 /*
+ double Log::find_largest_payment() const
+ {
+    std::vector<Item> payments(std::begin(_items), std::begin(_items)+_count);
+    std::sort(payments.begin(), payments.end());
+    return payments.back();
+ }
+
+double Log::find_average_amount() const
+ {
+    double sum = 0.0;
+    for (size_t i = 0 ; i < _count ; i++){
+        sum += _items.get_amountCents();
+    }
+    return sum/(double)_count/100;
+ }
+*/
+/*
 void Log::save(const std::string & csv_file_name) const
 {
      std::ofstream os{ csv_file_name};
