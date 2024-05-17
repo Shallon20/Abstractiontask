@@ -4,7 +4,7 @@
 #include <chrono>
 #include <memory>
 #include <iostream>
-#include <cstddef
+#include <cstddef>
 #include "ItemSpec.h"
 
 class PaymentSpec : public ItemSpec
@@ -20,7 +20,7 @@ public:
     static constexpr std::string_view PaymentType_str[] { "Any", "Auth", "Chargeback" };
     
     PaymentSpec() = default;
-    PaymentSpec(CardType cardType, CardScheme cardScheme, Paymenttype paymentType)
+    PaymentSpec(CardType cardType, CardScheme cardScheme, PaymentType paymentType)
      :
         _cardType { cardType }
         ,_cardScheme { cardScheme }

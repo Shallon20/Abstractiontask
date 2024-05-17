@@ -1,16 +1,5 @@
 #include "Item.h"
 
-std::ostream & operator<<(std::ostream & os, const Item & item)
-{
-    item.send_to(os);
-    return os;
-}
-std::istream & operator >>(std::istream &is, Item & item)
-{
-    item.recv_from(is);
-    return is;
-}
-
 void Item::send_to(std::ostream & os) const
 {
     os << _id;
@@ -18,6 +7,19 @@ void Item::send_to(std::ostream & os) const
         _spec ->send_to(os);
     }
 }
+
+std::ostream & operator<<(std::ostream & os, const Item & item)
+{
+    item.send_to(os);
+    return os;
+}
+
+std::istream & operator >>(std::istream &is, Item & item)
+{
+    item.recv_from(is);
+    return is;
+}
+
 void Item::recv_from(std::istream & is)
 {
     if (is){

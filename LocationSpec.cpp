@@ -16,50 +16,50 @@ bool LocationSpec::matches(const ItemSpec& itemSpec) const
     bool result{ true };
 
     // try to downcast to the required derived specification type
-    auto temp{ dynamic_cast<const GuitarSpec*>(&itemSpec) };
+    auto temp{ dynamic_cast<const LocationSpec*>(&itemSpec) };
     if (nullptr == temp)
         return false; // if itemSpec doesn't refer to GuitarSpec (or derived) class instance
 
     // cast to reference type for actual comparison of properties
-    const GuitarSpec& otherSpec{ *temp };
+    const LocationSpec& otherSpec{ *temp };
 
-    if (otherSpec.get_model() != ""
-        && otherSpec.get_model() != this->_model)
+    if (otherSpec.get_currency() != ""
+        && otherSpec.get_currency() != this->_currency)
         result = false;
 
-    if (otherSpec.get_type() != GuitarSpec::Type::ANY
-        && otherSpec.get_type() != this->_type)
+    if (otherSpec.get_cardType() != LocationSpec::CardType::ANY
+        && otherSpec.get_cardType() != this->_cardType)
         result = false;
 
     return result;
 }
 
 
-void GuitarSpec::send_to(std::ostream& os) const
+void LocationSpec::send_to(std::ostream& os) const
 {
-    os << _model << csv_delimiter
-       << Type_str[static_cast<size_t>(_type)];
+    os << _currency << csv_delimiter
+       << CardType_str[static_cast<size_t>(_cardType)];
 }
 
 
-void GuitarSpec::recv_from(std::istream & is)
+void LocationSpec::recv_from(std::istream & is)
 {
     if (is)
-        getline(is >> std::ws, _model, csv_delimiter); // also skips the delimiter
+        getline(is >> std::ws, _currency, csv_delimiter); // also skips the delimiter
 		
     if (is)
-        is >> _type;
+        is >> _cardType;
 }
 
 
-std::ostream & operator<<(std::ostream & os, GuitarSpec::Type t)
+std::ostream & operator<<(std::ostream & os, LocationSpec::CardType cardType)
 {
-    os << GuitarSpec::Type_str[static_cast<std::size_t>(t)];
+    os << LocationSpec::CardType_str[static_cast<std::size_t>(cardType)];
     return os;
 }
 
 
-std::istream & operator>>(std::istream & is, GuitarSpec::Type & type)
+std::istream & operator>>(std::istream & is, LocationSpec::CardType & cardType)
 {
     if (is)
     {
@@ -70,19 +70,19 @@ std::istream & operator>>(std::istream & is, GuitarSpec::Type & type)
         {
             bool found{ false };
 
-            for (size_t i{ 0 }; i < sizeof(GuitarSpec::Type_str)/sizeof(GuitarSpec::Type_str[0]); i++)
+            for (size_t i{ 0 }; i < sizeof(LocationSpec::CardType_str)/sizeof(LocationSpec::CardType_str[0]); i++)
             {
-                if (tmp.length() == GuitarSpec::Type_str[i].length()
-					&& 0 == strcasecmp(tmp.c_str(), std::string(GuitarSpec::Type_str[i]).c_str())) // case insensitive comparison
+                if (tmp.length() == LocationSpec::CardType_str[i].length()
+					&& 0 == strcasecmp(tmp.c_str(), std::string(LocationSpec::CardType_str[i]).c_str())) // case insensitive comparison
                 {
-                    type = static_cast<GuitarSpec::Type>(i);
+                    cardType = static_cast<LocationSpec::CardType>(i);
                     found = true;
                     break;
                 }
             }
 
             if (!found)
-                type = GuitarSpec::Type::ANY;
+                cardType = LocationSpec::CardType::ANY;
         }
     }
     return is;

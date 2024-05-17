@@ -13,7 +13,6 @@ public:
         int id, 
         std::shared_ptr<const ItemSpec> spec
         )
-
         : _id{ id }
     {
         set_spec(spec);

@@ -19,15 +19,15 @@ bool PaymentSpec::matches(const ItemSpec & itemSpec)const {
     return false;
     const PaymentSpec & otherSpec{*temp};
     if (otherSpec.get_cardType() != PaymentSpec::CardType::ANY &&
-        otherSpec.get_cardType != this->_cardType)
+        otherSpec.get_cardType() != this->_cardType)
         result = false;
 
     if (otherSpec.get_cardScheme() != PaymentSpec::CardScheme::ANY &&
-        otherSpec.get_cardScheme != this->_cardScheme)
+        otherSpec.get_cardScheme() != this->_cardScheme)
         result = false;
 
     if (otherSpec.get_paymentType() != PaymentSpec::PaymentType::ANY &&
-        otherSpec.get_paymentType != this->_paymentType)
+        otherSpec.get_paymentType() != this->_paymentType)
         result = false;
     
     return result;

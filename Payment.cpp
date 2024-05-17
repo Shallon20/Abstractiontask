@@ -55,3 +55,18 @@ void Payment::recv_from(std::istream & is)
     //is >> *temp_spec; // alternatively: temp_spec->recv_from(is);
    // _spec = temp_spec; // replace the specification
 }
+ double Payment::find_largest_payment() const
+ {
+    std::vector<Payment> payments(std::begin(_items), std::begin(_items)+_count);
+    std::sort(payments.begin(), payments.end());
+    return payments.back();
+ }
+
+double Payment::find_average_amount() const
+ {
+    double sum = 0.0;
+    for (size_t i = 0 ; i < _count ; i++){
+        sum += _items[i].get_amountCents();
+    }
+    return sum/(double)_count/100;
+ }

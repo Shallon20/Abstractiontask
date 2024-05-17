@@ -6,7 +6,7 @@
 class Location : public Item
 {
 public:
-    location() = default;
+    Location() = default;
     Location(int id, int amountCents, std::shared_ptr<const LocationSpec> spec)
         : Item(id, spec), _amountCents(amountCents) { }
 

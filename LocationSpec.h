@@ -4,26 +4,26 @@
 #include <cstddef> // for std::size_t
 #include <iostream>
 
-class GuitarSpec : public ItemSpec
+class LocationSpec : public ItemSpec
 {
 public:
-    enum class Type { ANY, ACOUSTIC, ELECTRIC };
-    static constexpr std::string_view Type_str[]{ "Any", "Acoustic", "Electric" };
+    enum class CardType { ANY, VIRTUAL, PLASTIC };
+    static constexpr std::string_view CardType_str[]{ "Any", "Virtual", "Plastic" };
 
-    GuitarSpec() = default;
-    GuitarSpec(const std::string & model, Type type)
-        : ItemSpec(), _model(model), _type(type) { }
+    LocationSpec() = default;
+    LocationSpec(const std::string & currency, CardType cardType)
+        : ItemSpec(), _currency(currency), _cardType(cardType) { }
 
-    std::string get_model() const { return _model; }
-    Type get_type() const { return _type; }
+    std::string get_currency() const { return _currency; }
+    CardType get_cardType() const { return _cardType; }
 
     void send_to(std::ostream & os) const override;
 	void recv_from(std::istream & is) override;
     bool matches(const ItemSpec & itemSpec) const override;
 private:
-    std::string _model;
-    Type _type;
+    std::string _currency;
+    CardType _cardType;
 };
 
-std::ostream & operator<<(std::ostream & os, GuitarSpec::Type type);
-std::istream & operator>>(std::istream & is, GuitarSpec::Type & type);
+std::ostream & operator<<(std::ostream & os, LocationSpec::CardType cardType);
+std::istream & operator>>(std::istream & is, LocationSpec::CardType & cardType);

@@ -18,11 +18,11 @@ public:
 		const std::string& currency, 
 		const int& amountCents,
 		const date_time& dateTime,
-		std::shared_ptr<const paymentSpec> spec
+		std::shared_ptr<const PaymentSpec> spec
 	): Item(id, spec)
 	 , _cardNumber{ cardNumber}
 	 , _currency { currency }
-	 , _amountcents { amountCents }
+	 , _amountCents { amountCents }
 	 , _dateTime { dateTime }
 	 { }
 
@@ -42,6 +42,9 @@ public:
 	{
 		return _amountCents < other._amountCents;
 	}*/
+	double find_largest_payment() const;
+
+    double find_average_amount() const;
 
 private:
 	std::string _cardNumber;
